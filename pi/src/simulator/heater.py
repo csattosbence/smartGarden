@@ -1,7 +1,6 @@
 import threading
 import time
-
-from simulator.simulatorImpl.TempSimulator import TempSimulator
+from simulator.temp import TempSimulator
 
 
 class HeaterSimulator:

@@ -12,7 +12,7 @@ public class TestController {
     public String callPi(){
         RestTemplate restTemplate = new RestTemplate();
         ResponseEntity<String> response = restTemplate.exchange(
-                "http://192.168.0.70:5000/",
+                "http://localhost:5000/getTemp",
                 HttpMethod.GET,
                 null,
                 String.class

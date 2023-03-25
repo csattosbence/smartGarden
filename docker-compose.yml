@@ -1,0 +1,11 @@
+version: '3.3'
+services:
+  pi:
+    build:
+      context: ./pi
+      dockerfile: Dockerfile
+    container_name: pi_service
+    volumes: 
+      - ./pi/src:/app
+    ports:
+     - 5000:5000

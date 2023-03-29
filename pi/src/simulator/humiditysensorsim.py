@@ -1,5 +1,5 @@
 import math
-import timesim
+from simulator import timesim
 import numpy as np
 
 

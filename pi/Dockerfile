@@ -8,6 +8,7 @@ COPY src/Pipfile Pipfile
 USER root
 
 RUN pip install pipenv
+RUN pip install numpy
 RUN pipenv install --deploy --system --skip-lock
 
 EXPOSE 5000

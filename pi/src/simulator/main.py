@@ -19,9 +19,9 @@ class Simulator:
                                                             temp_simulator,
                                                             humidity_sens_simulator)
 
+    t3 = threading.Thread(target=time_simulator.simulate_time)
     t1 = threading.Thread(target=temp_simulator.simulate_temp)
     t2 = threading.Thread(target=heater_simulator.simulate_heater)
-    t3 = threading.Thread(target=time_simulator.simulate_time)
     t4 = threading.Thread(target=humidity_sens_simulator.simulate_humidity)
     t5 = threading.Thread(target=consumption_sens_simulator.simulate_consumption)
 
@@ -44,12 +44,22 @@ class Simulator:
         self.t2.join()
         self.t3.join()
         self.t4.join()
-
-    def get_time(self):
-        return self.time_simulator.simulated_time
+        self.t5.join()
 
     def get_temp(self):
         return str(self.temp_simulator.current_temp)
+
+    def get_humidity(self):
+        return str(self.humidity_sens_simulator.current_humidity)
+
+    def get_momentary_consumption(self):
+        return str(self.consumption_sens_simulator.momentary_consumption)
+
+    def get_total_consumption(self):
+        return str(self.consumption_sens_simulator.total_consumption)
+
+    def get_time(self):
+        return str(datetime.fromtimestamp(self.time_simulator.simulated_time))
 
     def start_simulator(self):
         self.temp_simulator.start_simulator()
@@ -62,38 +72,38 @@ simulator = Simulator()
 
 
 
-
-simulator.run_simulator()
-
-run_time = datetime.now().timestamp() + 5
-
-while datetime.now().timestamp() < run_time:
-    print(" DATE -- " + str(datetime.fromtimestamp(simulator.time_simulator.simulated_time)) + "\n" +
-          " CURRENT TEMP -- " + str(simulator.temp_simulator.current_temp) + "\n" +
-          " CURRENT HUMIDITY -- " + str(simulator.humidity_sens_simulator.current_humidity) + "\n" +
-          " POWER CONSUMPTION -- " + "TOTAL --" + str(simulator.consumption_sens_simulator.total_consumption) + "W" +
-          " MOMENTARY -- " + str(simulator.consumption_sens_simulator.momentary_consumption) + "W/s" + "\n")
-
-run_time = datetime.now().timestamp() + 5
-
-simulator.heater_simulator.is_heater_on = False
-
-while datetime.now().timestamp() < run_time:
-    print(" DATE -- " + str(datetime.fromtimestamp(simulator.time_simulator.simulated_time)) + "\n" +
-          " CURRENT TEMP -- " + str(simulator.temp_simulator.current_temp) + "\n" +
-          " CURRENT HUMIDITY -- " + str(simulator.humidity_sens_simulator.current_humidity) + "\n" +
-          " POWER CONSUMPTION -- " + "TOTAL --" + str(simulator.consumption_sens_simulator.total_consumption) + "W" +
-          " MOMENTARY -- " + str(simulator.consumption_sens_simulator.momentary_consumption) + "W/s" + "\n")
-
-run_time = datetime.now().timestamp() + 5
-
-simulator.time_simulator.set_date(datetime(2012,12,12))
-
-while datetime.now().timestamp() < run_time:
-    print(" DATE -- " + str(datetime.fromtimestamp(simulator.time_simulator.simulated_time)) + "\n" +
-          " CURRENT TEMP -- " + str(simulator.temp_simulator.current_temp) + "\n" +
-          " CURRENT HUMIDITY -- " + str(simulator.humidity_sens_simulator.current_humidity) + "\n" +
-          " POWER CONSUMPTION -- " + "TOTAL --" + str(simulator.consumption_sens_simulator.total_consumption) + "W" +
-          " MOMENTARY -- " + str(simulator.consumption_sens_simulator.momentary_consumption) + "W/s" + "\n")
-
-simulator.stop_simulator()
+#
+# simulator.run_simulator()
+#
+# run_time = datetime.now().timestamp() + 5
+#
+# while datetime.now().timestamp() < run_time:
+#     print(" DATE -- " + str(datetime.fromtimestamp(simulator.time_simulator.simulated_time)) + "\n" +
+#           " CURRENT TEMP -- " + str(simulator.temp_simulator.current_temp) + "\n" +
+#           " CURRENT HUMIDITY -- " + str(simulator.humidity_sens_simulator.current_humidity) + "\n" +
+#           " POWER CONSUMPTION -- " + "TOTAL --" + str(simulator.consumption_sens_simulator.total_consumption) + "W" +
+#           " MOMENTARY -- " + str(simulator.consumption_sens_simulator.momentary_consumption) + "W/s" + "\n")
+#
+# run_time = datetime.now().timestamp() + 5
+#
+# simulator.heater_simulator.is_heater_on = False
+#
+# while datetime.now().timestamp() < run_time:
+#     print(" DATE -- " + str(datetime.fromtimestamp(simulator.time_simulator.simulated_time)) + "\n" +
+#           " CURRENT TEMP -- " + str(simulator.temp_simulator.current_temp) + "\n" +
+#           " CURRENT HUMIDITY -- " + str(simulator.humidity_sens_simulator.current_humidity) + "\n" +
+#           " POWER CONSUMPTION -- " + "TOTAL --" + str(simulator.consumption_sens_simulator.total_consumption) + "W" +
+#           " MOMENTARY -- " + str(simulator.consumption_sens_simulator.momentary_consumption) + "W/s" + "\n")
+#
+# run_time = datetime.now().timestamp() + 5
+#
+# simulator.time_simulator.set_date(datetime(2012,12,12))
+#
+# while datetime.now().timestamp() < run_time:
+#     print(" DATE -- " + str(datetime.fromtimestamp(simulator.time_simulator.simulated_time)) + "\n" +
+#           " CURRENT TEMP -- " + str(simulator.temp_simulator.current_temp) + "\n" +
+#           " CURRENT HUMIDITY -- " + str(simulator.humidity_sens_simulator.current_humidity) + "\n" +
+#           " POWER CONSUMPTION -- " + "TOTAL --" + str(simulator.consumption_sens_simulator.total_consumption) + "W" +
+#           " MOMENTARY -- " + str(simulator.consumption_sens_simulator.momentary_consumption) + "W/s" + "\n")
+#
+# simulator.stop_simulator()

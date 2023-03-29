@@ -1,8 +1,8 @@
 import math
-import threading
-import timesim
-import time
-import numpy as np
+
+from numpy import random
+
+from simulator import timesim
 
 
 class TempSimulator:
@@ -14,7 +14,7 @@ class TempSimulator:
 
     noise_current_value = 0
     noise_step = 0
-    noise_limit = np.random.normal(scale=3)
+    noise_limit = random.normal(scale=3)
 
     def simulate_temp(self):
         last_time_check = self.time_simulator.simulated_time
@@ -25,7 +25,7 @@ class TempSimulator:
                     self.noise_step = self.noise_limit / 10000
                     self.noise_current_value = self.noise_current_value + self.noise_step
                 else:
-                    self.noise_limit = np.random.normal(scale=3)
+                    self.noise_limit = random.normal(scale=3)
                     self.noise_current_value = 0
                     self.noise_step = self.noise_step / 10000
 
@@ -33,6 +33,7 @@ class TempSimulator:
 
             elif self.time_simulator.simulated_time < last_time_check:  # ez az ag arra van ha datum modositas lenne, akkor refreshelni kell a belso valtozokat
                 last_time_check = self.time_simulator.simulated_time
+
     def __init__(self, time_simulator: timesim.TimeSimulator):
         self.time_simulator = time_simulator
 

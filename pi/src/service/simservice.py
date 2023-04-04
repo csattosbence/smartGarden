@@ -1,21 +1,62 @@
+from model.sensordata import SensorData
 from simulator import main
 
 sim = main.simulator
 
 
-def run_simulator():
-    sim.run_simulator()
+def run_all_simulator():
+    sim.run_all_simulator()
 
-
-def get_temp():
-    return sim.get_temp()
+def stop_all_simulator():
+    sim.stop_all_simulator()
 
 
 def get_data():
-    return [
-        sim.get_temp(),
-        sim.get_humidity(),
-        sim.get_time(),
-        sim.get_total_consumption(),
-        sim.get_momentary_consumption()
-    ]
+    sensor_data = SensorData()
+
+    sensor_data.currentDate = str(sim.get_time())
+    sensor_data.light = str(round(sim.get_light(), 2))
+    sensor_data.humidity = str(round(sim.get_humidity(), 2))
+    sensor_data.temperature = str(round(sim.get_temp(), 2))
+    sensor_data.totalConsumption = str(round(sim.get_total_consumption(), 2))
+    sensor_data.momentaryConsumption = str(round(sim.get_momentary_consumption(), 2))
+    sensor_data.soilMoisture = str(round(sim.get_soil_moisture(), 2))
+
+    return sensor_data
+
+
+def turn_on_heater():
+    sim.turn_on_heater()
+    return True
+
+def turn_off_heater():
+    sim.turn_off_heater()
+    return True
+
+def turn_on_watering_system():
+    sim.turn_on_watering_system()
+    return True
+
+def turn_off_watering_system():
+    sim.turn_off_watering_system()
+    return True
+
+def turn_on_humidifier():
+    sim.turn_on_humidifier()
+    return True
+
+def turn_off_humidifier():
+    sim.turn_off_humidifier()
+    return True
+
+def turn_on_light():
+    sim.turn_on_light()
+    return True
+
+def turn_off_light():
+    sim.turn_off_light()
+    return True
+
+def set_ticker_speed(ticker_speed):
+    sim.set_ticker_speed(ticker_speed)
+    return True

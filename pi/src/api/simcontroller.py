@@ -6,8 +6,19 @@ sim_controller_api = Blueprint('simcontroller', __name__)
 service = simservice
 
 
+
 @sim_controller_api.route("/startAllSim")
 def start_all_sim():
+    """
+        Starts all simulators
+        ---
+        responses:
+            200:
+                description: Ok
+            400:
+                description: Wrong request
+         """
+
     service.run_all_simulator()
     return "simulator started running"
 

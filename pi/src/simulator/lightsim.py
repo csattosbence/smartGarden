@@ -8,7 +8,7 @@ class LightSimulator:
     light_usage = current_brightness / max_brightness
     power_consumption = 40 * light_usage #W/h
     simulator_active = True
-    system_on = True
+    system_on = False
 
     def __init__(self, time_simulator: TimeSimulator, light_sens_simulator: LightSensorSimulator):
         self.time_simulator = time_simulator

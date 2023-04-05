@@ -31,4 +31,7 @@ class SoilMoistureSensorSimulator:
     def stop_simulator(self):
         self.simulator_active = False
 
+    def start_simulator(self):
+        self.simulator_active = True
+
 

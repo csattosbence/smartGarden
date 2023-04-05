@@ -9,6 +9,8 @@ USER root
 
 RUN pip install pipenv
 RUN pip install numpy
+RUN pip install flask-swagger
+RUN pip install flask-swagger-ui
 RUN pipenv install --deploy --system --skip-lock
 
 EXPOSE 5000

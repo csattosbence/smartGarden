@@ -31,19 +31,41 @@ class Simulator:
     light_simulator = LightSimulator(time_simulator, light_sens_simulator)
     humidifier_simulator = HumidifierSimulator(time_simulator, humidity_sens_simulator)
 
-    time_thread = threading.Thread(target=time_simulator.simulate_time)
-    heater_thread = threading.Thread(target=heater_simulator.simulate_heater)
-    temp_thread = threading.Thread(target=temp_simulator.simulate_temp)
-    humidity_sens_thread = threading.Thread(target=humidity_sens_simulator.simulate_humidity)
-    humidifier_thread = threading.Thread(target=humidifier_simulator.simulate_humidifier)
-    light_sens_thread = threading.Thread(target=light_sens_simulator.simulate_light)
-    light_thread = threading.Thread(target=light_simulator.simulate_light_system)
-    soil_moist_thread = threading.Thread(target=soil_moist_sens_simulator.simulate_soil_moisture)
-    watering_system_thread = threading.Thread(target=watering_system_simulator.simulate_watering_system)
-    consumption_thread = threading.Thread(target=consumption_sens_simulator.simulate_consumption)
+    time_thread = None
+    heater_thread = None
+    temp_thread = None
+    humidity_sens_thread = None
+    humidifier_thread = None
+    light_sens_thread = None
+    light_thread = None
+    soil_moist_thread = None
+    watering_system_thread = None
+    consumption_thread = None
 
     def run_all_simulator(self):
         if not self.simulator_active:
+
+            self.time_simulator.start_simulator()
+            self.temp_simulator.start_simulator()
+            self.heater_simulator.start_simulator()
+            self.humidity_sens_simulator.start_simulator()
+            self.humidifier_simulator.start_simulator()
+            self.soil_moist_sens_simulator.start_simulator()
+            self.watering_system_simulator.start_simulator()
+            self.light_sens_simulator.start_simulator()
+            self.light_simulator.start_simulator()
+            self.consumption_sens_simulator.start_simulator()
+
+            self.time_thread = threading.Thread(target=self.time_simulator.simulate_time)
+            self.heater_thread = threading.Thread(target=self.heater_simulator.simulate_heater)
+            self.temp_thread = threading.Thread(target=self.temp_simulator.simulate_temp)
+            self.humidity_sens_thread = threading.Thread(target=self.humidity_sens_simulator.simulate_humidity)
+            self.humidifier_thread = threading.Thread(target=self.humidifier_simulator.simulate_humidifier)
+            self.light_sens_thread = threading.Thread(target=self.light_sens_simulator.simulate_light)
+            self.light_thread = threading.Thread(target=self.light_simulator.simulate_light_system)
+            self.soil_moist_thread = threading.Thread(target=self.soil_moist_sens_simulator.simulate_soil_moisture)
+            self.watering_system_thread = threading.Thread(target=self.watering_system_simulator.simulate_watering_system)
+            self.consumption_thread = threading.Thread(target=self.consumption_sens_simulator.simulate_consumption)
 
             self.time_thread.start()
             self.heater_thread.start()

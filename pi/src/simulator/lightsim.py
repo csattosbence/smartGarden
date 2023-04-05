@@ -6,7 +6,8 @@ class LightSimulator:
     current_brightness = 500
     max_brightness = 1500
     light_usage = current_brightness / max_brightness
-    power_consumption = 40 * light_usage #W/h
+    max_power_consumption = 40
+    power_consumption = max_power_consumption * light_usage #W/h
     simulator_active = True
     system_on = False
 

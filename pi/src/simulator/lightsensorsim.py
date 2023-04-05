@@ -5,13 +5,13 @@ import numpy as np
 
 
 class LightSensorSimulator:
-
     power_consumption = 2 # a szenzor fogyasztási értéke Ws (watt/h)
+    system_on = True
+    simulator_active = True
 
     const = 1
     step = 2 * math.pi / 86400 #egy leptetes erteke. Egy teljes periodus 360, ezt osztom egy nap masodperceinek a szamaval
     current_light = 0
-    simulator_active = True
 
     noise_current_value = 0
     noise_step = 0
@@ -24,7 +24,8 @@ class LightSensorSimulator:
         last_time_check = self.time_simulator.simulated_time
         while self.simulator_active:
             if self.time_simulator.simulated_time > last_time_check:
-                self.current_light = 1000 * (math.sin( (self.time_simulator.simulated_time * (2 * math.pi / 86400) - math.pi / 2)) + 1) + self.led_light_brightness
+                if self.system_on:
+                    self.current_light = 1000 * (math.sin( (self.time_simulator.simulated_time * (2 * math.pi / 86400) - math.pi / 2)) + 1) + self.led_light_brightness
                 last_time_check = self.time_simulator.simulated_time
             elif self.time_simulator.simulated_time < last_time_check:  # ez az ag arra van ha datum modositas lenne, akkor refreshelni kell a belso valtozokat
                 last_time_check = self.time_simulator.simulated_time
@@ -45,5 +46,11 @@ class LightSensorSimulator:
 
     def turn_off_light(self):
         self.led_light_brightness = 0
+
+    def turn_on_system(self):
+        self.system_on = True
+
+    def turn_off_system(self):
+        self.system_on = False
 
 

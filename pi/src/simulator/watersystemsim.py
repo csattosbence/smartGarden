@@ -3,6 +3,7 @@ from simulator.timesim import TimeSimulator
 
 
 class WateringSystemSimulator:
+    power_consumption = 30
     simulator_active = True
     system_on = False
 

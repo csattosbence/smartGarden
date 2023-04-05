@@ -6,6 +6,7 @@ from simulator import timesim
 
 
 class TempSimulator:
+    system_on = True
     power_consumption = 1 / 3600
     const = 18
     step = 2 * math.pi / 86400  #egy leptetes erteke. Egy teljes periodus 2pi, ezt osztom egy nap masodperceinek a szamaval
@@ -20,16 +21,17 @@ class TempSimulator:
         last_time_check = self.time_simulator.simulated_time
         while self.simulator_active:
             if self.time_simulator.simulated_time > last_time_check:
+                if self.system_on:
 
-                if self.noise_current_value <= self.noise_limit:
-                    self.noise_step = self.noise_limit / 10000
-                    self.noise_current_value = self.noise_current_value + self.noise_step
-                else:
-                    self.noise_limit = random.normal(scale=3)
-                    self.noise_current_value = 0
-                    self.noise_step = self.noise_step / 10000
+                    if self.noise_current_value <= self.noise_limit:
+                        self.noise_step = self.noise_limit / 10000
+                        self.noise_current_value = self.noise_current_value + self.noise_step
+                    else:
+                        self.noise_limit = random.normal(scale=3)
+                        self.noise_current_value = 0
+                        self.noise_step = self.noise_step / 10000
 
-                self.current_temp = -6 * math.sin(self.time_simulator.simulated_time * self.step + 1.5) + self.const + self.noise_current_value
+                    self.current_temp = -6 * math.sin(self.time_simulator.simulated_time * self.step + 1.5) + self.const + self.noise_current_value
 
                 last_time_check = self.time_simulator.simulated_time
             elif self.time_simulator.simulated_time < last_time_check:  # ez az ag arra van ha datum modositas lenne, akkor refreshelni kell a belso valtozokat
@@ -50,3 +52,9 @@ class TempSimulator:
 
     def decrease_temp(self, amount):
         self.const = self.const - amount
+
+    def turn_on_system(self):
+        self.system_on = True
+
+    def turn_off_system(self):
+        self.system_on = False

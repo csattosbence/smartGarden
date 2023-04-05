@@ -29,34 +29,57 @@ def turn_on_heater():
     sim.turn_on_heater()
     return True
 
+
 def turn_off_heater():
     sim.turn_off_heater()
     return True
+
 
 def turn_on_watering_system():
     sim.turn_on_watering_system()
     return True
 
+
 def turn_off_watering_system():
     sim.turn_off_watering_system()
     return True
+
 
 def turn_on_humidifier():
     sim.turn_on_humidifier()
     return True
 
+
 def turn_off_humidifier():
     sim.turn_off_humidifier()
     return True
+
 
 def turn_on_light():
     sim.turn_on_light()
     return True
 
+
 def turn_off_light():
     sim.turn_off_light()
     return True
 
+
 def set_ticker_speed(ticker_speed):
     sim.set_ticker_speed(ticker_speed)
+    return True
+
+
+def set_sim_date(sim_date):
+    sim.set_sim_date(sim_date)
+    return True
+
+
+def resume_ticker():
+    sim.resume_ticker()
+    return True
+
+
+def stop_ticker():
+    sim.stop_ticker()
     return True

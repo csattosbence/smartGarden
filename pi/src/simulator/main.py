@@ -23,14 +23,17 @@ class Simulator:
     light_sens_simulator = LightSensorSimulator(time_simulator)
     soil_moist_sens_simulator = SoilMoistureSensorSimulator(time_simulator)
     watering_system_simulator = WateringSystemSimulator(time_simulator,soil_moist_sens_simulator)
+    light_simulator = LightSimulator(time_simulator, light_sens_simulator)
+    humidifier_simulator = HumidifierSimulator(time_simulator, humidity_sens_simulator)
     consumption_sens_simulator = ConsumptionSensorSimulator(time_simulator,
                                                             heater_simulator,
                                                             temp_simulator,
-                                                            humidity_sens_simulator)
-
-    light_simulator = LightSimulator(time_simulator, light_sens_simulator)
-    humidifier_simulator = HumidifierSimulator(time_simulator, humidity_sens_simulator)
-
+                                                            humidity_sens_simulator,
+                                                            humidifier_simulator,
+                                                            light_sens_simulator,
+                                                            light_simulator,
+                                                            soil_moist_sens_simulator,
+                                                            watering_system_simulator)
     time_thread = None
     heater_thread = None
     temp_thread = None
@@ -171,9 +174,17 @@ class Simulator:
         self.time_simulator.ticker_speed = ticker_speed
         return True
 
+    def set_sim_date(self, sim_date):
+        self.time_simulator.set_date(sim_date)
+        return True
 
+    def resume_ticker(self):
+        self.time_simulator.resume_ticker()
+        return True
 
-
+    def stop_ticker(self):
+        self.time_simulator.stop_ticker()
+        return True
 
 
 

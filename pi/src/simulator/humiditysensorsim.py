@@ -5,6 +5,7 @@ import numpy as np
 
 class HumiditySensorSimulator:
     power_consumption = 1 # a szenzor fogyasztási értéke Ws (watt/h)
+    system_on = True
 
     const = 45
     step = 2 * math.pi / 86400 #egy leptetes erteke. Egy teljes periodus 360, ezt osztom egy nap masodperceinek a szamaval
@@ -19,16 +20,16 @@ class HumiditySensorSimulator:
         last_time_check = self.time_simulator.simulated_time
         while self.simulator_active:
             if self.time_simulator.simulated_time > last_time_check + 1:
+                if self.system_on:
+                    if self.noise_current_value <= self.noise_limit:
+                        self.noise_step = self.noise_limit / 10000
+                        self.noise_current_value = self.noise_current_value + self.noise_step
+                    else:
+                        self.noise_limit = np.random.normal(scale=3)
+                        self.noise_current_value = 0
+                        self.noise_step = self.noise_step / 10000
 
-                if self.noise_current_value <= self.noise_limit:
-                    self.noise_step = self.noise_limit / 10000
-                    self.noise_current_value = self.noise_current_value + self.noise_step
-                else:
-                    self.noise_limit = np.random.normal(scale=3)
-                    self.noise_current_value = 0
-                    self.noise_step = self.noise_step / 10000
-
-                self.current_humidity = 10 * math.sin(self.time_simulator.simulated_time * self.step + 1.5) + self.const + self.noise_current_value
+                    self.current_humidity = 10 * math.sin(self.time_simulator.simulated_time * self.step + 1.5) + self.const + self.noise_current_value
 
                 last_time_check = self.time_simulator.simulated_time
 
@@ -51,3 +52,9 @@ class HumiditySensorSimulator:
 
     def decrease_humidity(self, amount):
         self.const = self.const - amount
+
+    def turn_on_system(self):
+        self.system_on = True
+
+    def turn_off_system(self):
+        self.system_on = False

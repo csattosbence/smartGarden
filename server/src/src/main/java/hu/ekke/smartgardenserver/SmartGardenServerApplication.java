@@ -1,13 +1,11 @@
-package uni.ekke.backendtest;
+package hu.ekke.smartgardenserver;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @SpringBootApplication
-public class BackendTestApplication {
-
+public class SmartGardenServerApplication {
 	public static void main(String[] args) {
-		SpringApplication.run(BackendTestApplication.class, args);
+		SpringApplication.run(SmartGardenServerApplication.class, args);
 	}
-
 }

@@ -2,6 +2,8 @@ import json
 import threading
 import time
 
+from flask import request
+
 from model.responses.basicresponse import BasicResponse
 from sockets.extension import socketio
 from flask_socketio import emit
@@ -10,25 +12,41 @@ from service import simservice
 service = simservice
 
 
-def update():
-    time.sleep(1)
-    response = service.get_data()
-    json_resp = json.dumps(response.__dict__)
-    emit('get_data', json_resp, broadcast=True)
+def send_sensor_data():
+    global emit_data
+    while emit_data:
+        time.sleep(1)
+        response = service.get_data()
+        socketio.emit('data_from_pi', json.dumps(response.__dict__))
+        print("data emited")
+
+
+data_thread = None
+emit_data = False
+
+users = []
 
 @socketio.on('connect')
 def handle_connect():
+    global data_thread
+    global emit_data
+    users.append(request.sid)
+    emit_data = True
+    if data_thread is None:
+        data_thread=threading.Thread(target=send_sensor_data)
+        data_thread.start()
     print('Client connected')
 
+@socketio.on('disconnect')
+def disconnect():
+    global emit_data
+    global data_thread
+    users.remove(request.sid)
+    if not users:
+        emit_data = False
+        data_thread = None
+    print('Client disconnected')
 
-@socketio.on('my event')
-def handle_message(message):
-    print('received message: ' + message)
-    emit('my response', {'data': 'got it!'})
-
-@socketio.on('get_data')
-def handle_message(message):
-    print("get data has been called")
 
 
 

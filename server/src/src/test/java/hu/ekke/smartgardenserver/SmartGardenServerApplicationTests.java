@@ -1,10 +1,10 @@
-package uni.ekke.backendtest;
+package hu.ekke.smartgardenserver;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 
 @SpringBootTest
-class BackendTestApplicationTests {
+class SmartGardenServerApplicationTests {
 
 	@Test
 	void contextLoads() {

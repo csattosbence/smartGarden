@@ -45,7 +45,7 @@ public class SocketIoServerConfig {
                 log.info("--------------------- User Disconnected ---------------------");
             });
 
-            socket.on("get_data", args -> {
+            socket.on("data_from_server", args -> {
                 if (!Cache.cache.isEmpty()) {
                     while (true) {
                         try {

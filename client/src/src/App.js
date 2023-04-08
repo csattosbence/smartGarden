@@ -4,7 +4,9 @@ import DataSocketComponent from "./components/dataSocket";
 import Home from "./pages/Home";
 import SimController from "./pages/SimController"
 import ControlPanel from "./pages/ControlPanel"
-import Navbar from "./pages/Navbar";
+import AppNavbar from "./pages/Navbar";
+import { Row, Col} from "react-bootstrap";
+import 'bootstrap/dist/css/bootstrap.min.css';
 
 
 
@@ -16,13 +18,13 @@ function App() {
   return (
     <div className="App">
       <DataSocketComponent data={data} setData={setData}/>
-      <Navbar/>
+      <AppNavbar/>
       <div className="container">
-        <Routes>
-          <Route path="/" element={<Home data={data}/>} />
-          <Route path="/simController" element={<SimController />} />
-          <Route path="/ControlPanel" element={<ControlPanel />} />
-        </Routes>
+            <Routes>
+              <Route path="/" element={<Home data={data}/>} />
+              <Route path="/simController" element={<SimController />} />
+              <Route path="/ControlPanel" element={<ControlPanel />} />
+            </Routes>
       </div>
       
     </div>

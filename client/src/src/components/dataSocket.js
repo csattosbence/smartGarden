@@ -19,7 +19,7 @@ const DataSocketComponent =({data, setData})=>{
     }, []);
 
     useEffect(() =>{
-        if (data.length > 10){
+        if (data.length > 1000){
         setData(currentData =>[...currentData.slice(1)])
         }
     })

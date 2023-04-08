@@ -19,8 +19,8 @@ public class SocketIoServerConfig {
     public EngineIoServer engineIoServer(){
         EngineIoServerOptions options = EngineIoServerOptions.newFromDefault();
         options.setAllowedCorsOrigins(new String[]{"*"});
-        options.setPingTimeout(30000);
         options.setAllowSyncPolling(true);
+        options.setPingTimeout(300000000);
         return new EngineIoServer(options);
     }
 
@@ -44,6 +44,9 @@ public class SocketIoServerConfig {
             socket.on("disconnect", args ->{
                 log.info("--------------------- User Disconnected ---------------------");
             });
+
+
+
 
             socket.on("data_from_server", args -> {
                 if (!Cache.cache.isEmpty()) {

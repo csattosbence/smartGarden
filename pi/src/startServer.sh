@@ -1,1 +1,1 @@
-flask --app run.py run --host 0.0.0.0 --debug
+flask --app main.py run --host 0.0.0.0 --debug

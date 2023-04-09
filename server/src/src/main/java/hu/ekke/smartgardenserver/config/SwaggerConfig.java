@@ -1,4 +1,4 @@
-package hu.ekke.smartgardenserver;
+package hu.ekke.smartgardenserver.config;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;

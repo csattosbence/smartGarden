@@ -28,6 +28,39 @@ public class GardenControllerServiceImpl implements GardenControllerService {
         automationLogic.turnOffHeater();
     }
 
+    @Override
+    public void setHumidifier(float humidity) {
+        automationLogic.turnOnHumidifier();
+        automationLogic.setHumidity(humidity);
+    }
+
+    @Override
+    public void turnOffHumidifier() {
+        automationLogic.turnOffHumidifier();
+    }
+
+    @Override
+    public void setLight(float light) {
+        automationLogic.turnOnLight();
+        automationLogic.setLight(light);
+    }
+
+    @Override
+    public void turnOffLight() {
+        automationLogic.turnOffLight();
+    }
+
+    @Override
+    public void setWateringSystem(float soilMoist) {
+        automationLogic.turnOnWateringSystem();
+        automationLogic.setSoilMoist(soilMoist);
+    }
+
+    @Override
+    public void turnOffWateringSystem() {
+        automationLogic.turnOffWateringSystem();
+    }
+
     public GardenControllerServiceImpl(PiApiCalls piApiCalls){
         this.piApiCalls = piApiCalls;
         this.automationLogic.setPiApiCallsService(piApiCalls);

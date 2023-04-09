@@ -83,3 +83,8 @@ def resume_ticker():
 def stop_ticker():
     sim.stop_ticker()
     return True
+
+
+def set_light(light):
+    sim.set_light(light)
+    return True

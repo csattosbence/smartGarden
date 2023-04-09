@@ -32,4 +32,67 @@ public class GardenControllerController {
             return ResponseEntity.internalServerError().build();
         }
     }
+
+    @GetMapping("/setHumidifier")
+    public ResponseEntity<?> setHumidifier(@RequestParam("humidity") float humidity) {
+        try{
+            controllerService.setHumidifier(humidity);
+            return ResponseEntity.ok().build();
+        }catch (Exception e){
+            return ResponseEntity.internalServerError().build();
+        }
+    }
+
+    @GetMapping("/turnOffHumidifier")
+    public ResponseEntity<?> turnOffHumidifier() {
+        try{
+            controllerService.turnOffHumidifier();
+            return ResponseEntity.ok().build();
+        }catch (Exception e){
+            return ResponseEntity.internalServerError().build();
+        }
+    }
+
+    @GetMapping("/setLight")
+    public ResponseEntity<?> setLight(@RequestParam("light") float light) {
+        try{
+            controllerService.setLight(light);
+            return ResponseEntity.ok().build();
+        }catch (Exception e){
+            return ResponseEntity.internalServerError().build();
+        }
+    }
+
+    @GetMapping("/turnOffLight")
+    public ResponseEntity<?> turnOffLight() {
+        try{
+            controllerService.turnOffLight();
+            return ResponseEntity.ok().build();
+        }catch (Exception e){
+            return ResponseEntity.internalServerError().build();
+        }
+    }
+
+    @GetMapping("/setWateringSystem")
+    public ResponseEntity<?> setWateringSystem(@RequestParam("soilMoist") float soilMoist) {
+        try{
+            controllerService.setWateringSystem(soilMoist);
+            return ResponseEntity.ok().build();
+        }catch (Exception e){
+            return ResponseEntity.internalServerError().build();
+        }
+    }
+
+    @GetMapping("/turnOffWateringSystem")
+    public ResponseEntity<?> turnOffWateringSystem() {
+        try{
+            controllerService.turnOffWateringSystem();
+            return ResponseEntity.ok().build();
+        }catch (Exception e){
+            return ResponseEntity.internalServerError().build();
+        }
+    }
+
+
+
 }

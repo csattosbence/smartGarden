@@ -4,9 +4,11 @@ import hu.ekke.smartgardenserver.cache.Cache;
 import hu.ekke.smartgardenserver.model.SensorData;
 import hu.ekke.smartgardenserver.model.AutomationLogicState;
 import hu.ekke.smartgardenserver.service.PiApiCalls;
+import lombok.extern.slf4j.Slf4j;
 
 import java.util.List;
 
+@Slf4j
 public class AutomationLogic implements Runnable{
     
     private final float INITIAL_TEMPERATURE = 20f;
@@ -23,20 +25,18 @@ public class AutomationLogic implements Runnable{
 
     @Override
     public void run() {
-        try {
         setInitialState();
-        while(isRunning){
-            Thread.sleep(1000);
-            controlHeater();
-        }
-
+        try {
+            while(isRunning){
+                controlHumidifier();
+                controlLight();
+                controlWateringSystem();
+                controlHeater();
+                Thread.sleep(1000);
+            }
         }catch (InterruptedException e){
-
+            log.error("AN ERROR HAS OCCURRED IN AUTOMATION LOGIC " + e.getMessage());
         }
-    }
-
-    public void stop() {
-        isRunning = false;
     }
 
     private void controlHeater() {
@@ -44,13 +44,59 @@ public class AutomationLogic implements Runnable{
             if(cache != null && !cache.isEmpty()){
                 SensorData lastData = cache.get(cache.size() -1);
                 if (lastData.getTemperature() < state.getDesiredTemperature()){
-                    piApiCalls.heaterOnPiCall();
+                    piApiCalls.heaterOn();
                 }
                 else if ((lastData.getTemperature() > state.getDesiredTemperature())){
-                    piApiCalls.heaterOffPiCall();
+                    piApiCalls.heaterOff();
                 }
             }
         }
+    }
+
+    private void controlHumidifier(){
+        if (state.isHumidifierOn()){
+            if(cache != null && !cache.isEmpty()){
+                SensorData lastData = cache.get(cache.size() -1);
+                if (lastData.getHumidity() < state.getDesiredHumidity()){
+                    piApiCalls.humidifierOn();
+                }
+                else if ((lastData.getHumidity() > state.getDesiredHumidity())){
+                    piApiCalls.humidifierOff();
+                }
+            }
+        }
+    }
+
+    private void controlWateringSystem(){
+        if (state.isWaterSystemOn()){
+            if(cache != null && !cache.isEmpty()){
+                SensorData lastData = cache.get(cache.size() -1);
+                if (lastData.getSoilMoisture() < state.getDesiredSoilMoisture()){
+                    piApiCalls.wateringSystemOn();
+                }
+                else if ((lastData.getSoilMoisture() > state.getDesiredSoilMoisture())){
+                    piApiCalls.wateringSystemOff();
+                }
+            }
+        }
+    }
+
+    private void controlLight(){
+        if (state.isLightOn()){
+
+            if(cache != null && !cache.isEmpty()){
+                SensorData lastData = cache.get(cache.size() -1);
+                if (lastData.getLight() <= state.getDesiredLight() - 50){
+                    float incrementValue = state.getDesiredLight() - lastData.getLight();
+                    piApiCalls.turnOnLight();
+                    piApiCalls.setLight(incrementValue);
+                }
+            }
+        }
+    }
+
+    public void setPiApiCallsService(PiApiCalls piApiCalls){
+        this.piApiCalls = piApiCalls;
     }
 
     private void setInitialState(){
@@ -68,19 +114,57 @@ public class AutomationLogic implements Runnable{
         }
     }
 
+
+    //-----------------------STATE SETTERS-----------------------
     public synchronized void turnOnHeater(){
         this.state.setHeaterOn(true);
     }
 
     public synchronized void turnOffHeater(){
         this.state.setHeaterOn(false);
+        piApiCalls.heaterOff();
     }
 
     public synchronized void setTemperatureState(float temp){
         this.state.setDesiredTemperature(temp);
     }
 
-    public void setPiApiCallsService(PiApiCalls piApiCalls){
-        this.piApiCalls = piApiCalls;
+    public void turnOnHumidifier() {
+        this.state.setHumidifierOn(true);
+    }
+
+    public void setHumidity(float humidity) {
+        this.state.setDesiredHumidity(humidity);
+    }
+
+    public void turnOffHumidifier() {
+        this.state.setHumidifierOn(false);
+        piApiCalls.humidifierOff();
+    }
+
+    public void turnOnLight() {
+        this.state.setLightOn(true);
+    }
+
+    public void setLight(float light) {
+        this.state.setDesiredLight(light);
+    }
+
+    public void turnOffLight() {
+        this.state.setLightOn(false);
+        piApiCalls.turnOffLight();
+    }
+
+    public void turnOnWateringSystem() {
+        this.state.setWaterSystemOn(true);
+    }
+
+    public void setSoilMoist(float soilMoist) {
+        this.state.setDesiredSoilMoisture(soilMoist);
+    }
+
+    public void turnOffWateringSystem() {
+        this.state.setWaterSystemOn(false);
+        piApiCalls.wateringSystemOff();
     }
 }

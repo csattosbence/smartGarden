@@ -1,6 +1,6 @@
 import json
 
-from flask import Blueprint, Response
+from flask import Blueprint, Response, request
 
 from model.responses.basicresponse import BasicResponse
 from service import simservice
@@ -230,6 +230,45 @@ def turn_off_light():
     try:
         simservice.turn_off_light()
 
+        response.status_code = 200
+        response.description = "Light system has been successfully turned off"
+
+        return Response(json.dumps(response.__dict__), 200)
+    except:
+        response.status_code = 500
+        response.description = "Something went wrong"
+
+        return Response(json.dumps(response.__dict__), 500)
+
+@consumer_controller_api.route("/set_light")
+def set_light():
+    """
+    Set light system to specific value
+    ---
+    parameters:
+    -   in: query
+        name: light
+        schema:
+            type: numeric
+
+    responses:
+        200:
+            description: Ok
+            content:
+                application/json
+
+        400:
+            description: Wrong request
+    """
+    response = BasicResponse()
+    try:
+        light = request.args.get("light")
+        if light is None or light == "":
+            response.description = "Bad Request, ticker speed is missing"
+            response.status_code = 400
+            return Response(json.dumps(response.__dict__), 400)
+
+        simservice.set_light(float(light))
         response.status_code = 200
         response.description = "Light system has been successfully turned off"
 

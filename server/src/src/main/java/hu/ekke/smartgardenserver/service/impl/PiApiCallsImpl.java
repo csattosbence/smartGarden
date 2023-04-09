@@ -19,7 +19,7 @@ public class PiApiCallsImpl implements PiApiCalls {
     private final Gson gson = new Gson();
 
     @Override
-    public PiBasicResponse heaterOnPiCall() {
+    public PiBasicResponse heaterOn() {
         RestTemplate restTemplate = new RestTemplate();
         ResponseEntity<String> responseEntity = restTemplate.exchange(
                 piHostUrl + "/heater_on",
@@ -32,7 +32,7 @@ public class PiApiCallsImpl implements PiApiCalls {
     }
 
     @Override
-    public PiBasicResponse heaterOffPiCall() {
+    public PiBasicResponse heaterOff() {
         RestTemplate restTemplate = new RestTemplate();
         ResponseEntity<String> responseEntity = restTemplate.exchange(
                 piHostUrl + "/heater_off",
@@ -44,4 +44,95 @@ public class PiApiCallsImpl implements PiApiCalls {
         return response;
     }
 
+    @Override
+    public PiBasicResponse humidifierOn() {
+        RestTemplate restTemplate = new RestTemplate();
+        ResponseEntity<String> responseEntity = restTemplate.exchange(
+                piHostUrl + "/humidifier_on",
+                HttpMethod.GET,
+                null,
+                String.class
+        );
+        PiBasicResponse response = gson.fromJson(responseEntity.getBody(), PiBasicResponse.class);
+        return response;
+    }
+
+    @Override
+    public PiBasicResponse humidifierOff() {
+        RestTemplate restTemplate = new RestTemplate();
+        ResponseEntity<String> responseEntity = restTemplate.exchange(
+                piHostUrl + "/humidifier_off",
+                HttpMethod.GET,
+                null,
+                String.class
+        );
+        PiBasicResponse response = gson.fromJson(responseEntity.getBody(), PiBasicResponse.class);
+        return response;
+    }
+
+    @Override
+    public PiBasicResponse wateringSystemOn() {
+        RestTemplate restTemplate = new RestTemplate();
+        ResponseEntity<String> responseEntity = restTemplate.exchange(
+                piHostUrl + "/water_on",
+                HttpMethod.GET,
+                null,
+                String.class
+        );
+        PiBasicResponse response = gson.fromJson(responseEntity.getBody(), PiBasicResponse.class);
+        return response;
+    }
+
+    @Override
+    public PiBasicResponse wateringSystemOff() {
+        RestTemplate restTemplate = new RestTemplate();
+        ResponseEntity<String> responseEntity = restTemplate.exchange(
+                piHostUrl + "/water_off",
+                HttpMethod.GET,
+                null,
+                String.class
+        );
+        PiBasicResponse response = gson.fromJson(responseEntity.getBody(), PiBasicResponse.class);
+        return response;
+    }
+
+    @Override
+    public PiBasicResponse turnOnLight() {
+        RestTemplate restTemplate = new RestTemplate();
+        ResponseEntity<String> responseEntity = restTemplate.exchange(
+                piHostUrl + "/light_on",
+                HttpMethod.GET,
+                null,
+                String.class
+        );
+        PiBasicResponse response = gson.fromJson(responseEntity.getBody(), PiBasicResponse.class);
+        return response;
+    }
+
+    @Override
+    public PiBasicResponse turnOffLight() {
+        RestTemplate restTemplate = new RestTemplate();
+        ResponseEntity<String> responseEntity = restTemplate.exchange(
+                piHostUrl + "/light_off",
+                HttpMethod.GET,
+                null,
+                String.class
+        );
+        PiBasicResponse response = gson.fromJson(responseEntity.getBody(), PiBasicResponse.class);
+        return response;
+    }
+
+    @Override
+    public PiBasicResponse setLight(float incrementValue) {
+        RestTemplate restTemplate = new RestTemplate();
+        ResponseEntity<String> responseEntity = restTemplate.exchange(
+                piHostUrl + "/set_light?light={incrementValue}",
+                HttpMethod.GET,
+                null,
+                String.class,
+                incrementValue
+        );
+        PiBasicResponse response = gson.fromJson(responseEntity.getBody(), PiBasicResponse.class);
+        return response;
+    }
 }

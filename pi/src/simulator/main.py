@@ -186,7 +186,9 @@ class Simulator:
         self.time_simulator.stop_ticker()
         return True
 
-
+    def set_light(self, light):
+        self.light_simulator.set_current_brightness(light)
+        return True
 
 
 simulator = Simulator()

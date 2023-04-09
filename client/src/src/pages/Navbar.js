@@ -3,25 +3,33 @@ import { Row, Col} from "react-bootstrap";
 import Container from 'react-bootstrap/Container';
 import Nav from 'react-bootstrap/Nav';
 import Navbar from 'react-bootstrap/Navbar';
+import '../style/navbar-style.css'
 
 const AppNavbar = () =>{
     return(
-        <Navbar bg="light" expand="lg">
+        <div className="nav-bar">
+            <Navbar  expand="lg">
             <Container>
-                <Navbar.Brand>
+                <Row>
+                    <div className="navbar-items">
+                    <div className="title">
                     <Link to="/">
                         Smart Garden
                     </Link>
-                </Navbar.Brand>
+                </div>
+                
                 <Navbar.Toggle aria-controls="basic-navbar-nav" />
                 <Navbar.Collapse id="basic-navbar-nav">
                     <Nav className="me-auto">
-                        <Nav.Link ><Link to="/ControlPanel">Control Panel</Link></Nav.Link>
-                        <Nav.Link ><Link to="/SimController">Sim Controller</Link></Nav.Link>
+                        <Link to="/ControlPanel">Control Panel</Link>
+                        <Link to="/SimController">Sim Controller</Link>
                     </Nav>
                 </Navbar.Collapse>
+                </div>
+                </Row>
             </Container>
             </Navbar>
+        </div>
     )
 }
 

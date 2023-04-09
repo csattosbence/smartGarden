@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import {Route, Routes} from "react-router-dom"
 import DataSocketComponent from "./components/dataSocket";
-import Home from "./pages/Home";
+import Dashboard from "./pages/Dashboard";
 import SimController from "./pages/SimController"
 import ControlPanel from "./pages/ControlPanel"
 import AppNavbar from "./pages/Navbar";
@@ -21,7 +21,7 @@ function App() {
       <AppNavbar/>
       <div className="container">
             <Routes>
-              <Route path="/" element={<Home data={data}/>} />
+              <Route path="/" element={<Dashboard data={data}/>} />
               <Route path="/simController" element={<SimController />} />
               <Route path="/ControlPanel" element={<ControlPanel />} />
             </Routes>

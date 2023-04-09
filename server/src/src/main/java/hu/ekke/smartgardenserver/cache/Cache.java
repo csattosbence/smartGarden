@@ -10,10 +10,14 @@ import java.util.List;
 @Slf4j
 @Service
 public class Cache {
-    public static List<SensorData> cache = new LinkedList<>();
+    private static final List<SensorData> cache = new LinkedList<>();
 
     public static void addToCache(SensorData element){
         cache.add(element);
         log.info("element added to cache");
+    }
+
+    public static List<SensorData> getCache(){
+        return cache;
     }
 }

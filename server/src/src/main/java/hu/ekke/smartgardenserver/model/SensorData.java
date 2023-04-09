@@ -11,12 +11,12 @@ import lombok.NoArgsConstructor;
 @Builder
 @Data
 public class SensorData {
-    private String temperature;
-    private String humidity;
-    private String totalConsumption;
-    private String momentaryConsumption;
+    private Float temperature;
+    private Float humidity;
+    private Float totalConsumption;
+    private Float momentaryConsumption;
     private String currentDate;
-    private String light;
-    private String soilMoisture;
+    private Float light;
+    private Float soilMoisture;
 
 }

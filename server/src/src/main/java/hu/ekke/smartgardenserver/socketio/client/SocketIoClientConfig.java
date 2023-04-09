@@ -19,15 +19,15 @@ import java.net.URI;
 @RequiredArgsConstructor(onConstructor_ = @Autowired)
 public class SocketIoClientConfig {
 
-    @Value("${pi.ws.url}")
-    private String piSocketUrl;
+    @Value("${pi.host.url}")
+    private String piHostUrl;
 
     @Value("${pi.ws.path}")
     private String piSocketPath;
 
     @Bean
     public Socket socketIoClient(){
-        URI uri = URI.create(piSocketUrl);
+        URI uri = URI.create(piHostUrl);
         Gson gson = new Gson();
 
         IO.Options options = IO.Options.builder()

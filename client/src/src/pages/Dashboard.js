@@ -3,17 +3,16 @@ import LightChart from "../components/charts/lightChart";
 import SoilMoistChart from "../components/charts/soilMoistChart";
 import TempChart from "../components/charts/tempChart";
 import { Row, Col} from "react-bootstrap";
+import CurrentHumididtyPanel from "../components/panel/humidityPanel";
 
 
 
-const Home = ({data}) => {
+const Dashboard = ({data}) => {
 
   return (
     <div className="chart-container text-align-center">
       <Row className="justify-content-center">
-        <Col>
-          
-        </Col>
+        <CurrentHumididtyPanel data={data}/>
       </Row>
       <Row className="justify-content-center">
         <Col >
@@ -35,4 +34,4 @@ const Home = ({data}) => {
   );
 }
 
-export default Home;
+export default Dashboard;

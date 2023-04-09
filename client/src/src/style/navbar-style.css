@@ -1,0 +1,14 @@
+.nav-bar{
+    background: rgb(2,0,36);
+    background: linear-gradient(90deg,rgba(234,251,255,1) 100%, rgba(0,212,255,1) 100%);
+    text-decoration: none;
+}
+
+.nav-items{
+    text-decoration: none;
+    color: aliceblue;
+}
+
+.link{
+    text-decoration: none;
+}

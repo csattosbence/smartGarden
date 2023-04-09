@@ -18,7 +18,6 @@ def send_sensor_data():
         time.sleep(1)
         response = service.get_data()
         socketio.emit('data_from_pi', json.dumps(response.__dict__))
-        print("data emited")
 
 
 data_thread = None

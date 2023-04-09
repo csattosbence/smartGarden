@@ -2,12 +2,15 @@ package hu.ekke.smartgardenserver.socketio.server;
 
 import com.google.gson.Gson;
 import hu.ekke.smartgardenserver.cache.Cache;
+import hu.ekke.smartgardenserver.model.SensorData;
 import io.socket.engineio.server.EngineIoServer;
 import io.socket.engineio.server.EngineIoServerOptions;
 import io.socket.socketio.server.*;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+
+import java.util.List;
 
 @Configuration
 @Slf4j
@@ -34,7 +37,9 @@ public class SocketIoServerConfig {
     SocketIoNamespace namespace(SocketIoServer socketIoServer){
         SocketIoNamespace nsAll = socketIoServer.namespace(ALL);
         SocketIoAdapter adapter = new SocketIoMemoryAdapter.Factory().createAdapter(nsAll);
+        List<SensorData> cache = Cache.getCache();
         Gson gson = new Gson();
+
         nsAll.on("connection", connectionArgs -> {
             SocketIoSocket socket = (SocketIoSocket) connectionArgs[0];
 
@@ -45,15 +50,12 @@ public class SocketIoServerConfig {
                 log.info("--------------------- User Disconnected ---------------------");
             });
 
-
-
-
             socket.on("data_from_server", args -> {
-                if (!Cache.cache.isEmpty()) {
+                if (!cache.isEmpty()) {
                     while (true) {
                         try {
                             Thread.sleep(1000);
-                            socket.send("data_from_server", gson.toJson(Cache.cache.get(Cache.cache.size() - 1)));
+                            socket.send("data_from_server", gson.toJson(cache.get(cache.size() - 1)));
                         } catch (Exception e) {
                             break;
                         }
@@ -63,5 +65,4 @@ public class SocketIoServerConfig {
         });
         return nsAll;
     }
-
 }

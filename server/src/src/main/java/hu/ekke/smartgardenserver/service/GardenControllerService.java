@@ -1,5 +1,6 @@
 package hu.ekke.smartgardenserver.service;
 
+import hu.ekke.smartgardenserver.model.respons.ConsumerStatusResponse;
 import hu.ekke.smartgardenserver.model.respons.PiBasicResponse;
 
 public interface GardenControllerService {
@@ -19,4 +20,6 @@ public interface GardenControllerService {
     void setWateringSystem(float soilMoist);
 
     void turnOffWateringSystem();
+
+    ConsumerStatusResponse getConsumerStatus();
 }

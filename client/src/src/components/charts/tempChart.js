@@ -1,6 +1,6 @@
 import {
-    Line,
-    LineChart,
+    Area,
+    AreaChart,
     XAxis,
     YAxis,
     CartesianGrid,
@@ -13,17 +13,15 @@ import {
 
 const TempChart = ({data}) =>{
     return(
-        
         <div className='temp-chart'>
             <ResponsiveContainer width="80%" height={200}>
-            <LineChart  data={data}>
+            <AreaChart  data={data}>
                 <XAxis dataKey="currentDate"/>
                 <YAxis dataKey="temperature"/>
                 <Tooltip/>
                 <Legend verticalAlign="top" height={36}/>
-                <Line name="Temperature °C" type="monotone" dataKey="temperature" stroke="#f73636" />
-                <CartesianGrid strokeDasharray="3 3" />
-            </LineChart>
+                <Area name="Temperature °C" type="monotone" dataKey="temperature" stroke="#f73636" fill='#f50509'/>
+            </AreaChart>
             </ResponsiveContainer>
         </div>
     )

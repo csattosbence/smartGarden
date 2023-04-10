@@ -190,6 +190,18 @@ class Simulator:
         self.light_simulator.set_current_brightness(light)
         return True
 
+    def get_humidifier_status(self):
+        return self.humidifier_simulator.system_on
+
+    def get_heater_satus(self):
+        return self.heater_simulator.system_on
+
+    def get_water_sys_status(self):
+        return self.watering_system_simulator.system_on
+
+    def get_light_satus(self):
+        return self.watering_system_simulator.system_on
+
 
 simulator = Simulator()
 

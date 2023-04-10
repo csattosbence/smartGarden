@@ -1,33 +1,33 @@
-import HumidityChart from "../components/charts/humidityChart";
-import LightChart from "../components/charts/lightChart";
-import SoilMoistChart from "../components/charts/soilMoistChart";
-import TempChart from "../components/charts/tempChart";
 import { Row, Col} from "react-bootstrap";
-import CurrentHumididtyPanel from "../components/panel/humidityPanel";
+import TemperaturePanel from "../components/panel/temperaturePanel";
+import HumidityPanel from "../components/panel/humidityPanel";
+import LightPanel from "../components/panel/lightPanel";
+import SoilMoisturePanel from "../components/panel/soilMoistPanel";
 
 
 
 const Dashboard = ({data}) => {
 
   return (
-    <div className="chart-container text-align-center">
+    <div className="chart-container ">
       <Row className="justify-content-center">
-        <CurrentHumididtyPanel data={data}/>
-      </Row>
-      <Row className="justify-content-center">
-        <Col >
-            <TempChart data={data}/>
-        </Col>
         <Col>
-          <SoilMoistChart data={data}/>
+          <TemperaturePanel data={data}/>
         </Col>
       </Row>
       <Row className="justify-content-center">
-        <Col >
-          <LightChart data={data}/>
-        </Col>
         <Col>
-          <HumidityChart data={data}/>
+          <HumidityPanel data={data}/>
+        </Col>
+      </Row>
+      <Row className="justify-content-center">
+        <Col>
+          <LightPanel data={data}/>
+        </Col>
+      </Row>
+      <Row className="justify-content-center">
+        <Col>
+          <SoilMoisturePanel data={data}/>
         </Col>
       </Row>
     </div>

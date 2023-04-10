@@ -1,5 +1,6 @@
 package hu.ekke.smartgardenserver.controller;
 
+import hu.ekke.smartgardenserver.model.respons.ConsumerStatusResponse;
 import hu.ekke.smartgardenserver.service.GardenControllerService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -93,6 +94,13 @@ public class GardenControllerController {
         }
     }
 
-
-
+    @GetMapping("/getConsumerStatus")
+    public ResponseEntity<ConsumerStatusResponse> getStatusResponses(){
+        try {
+            ConsumerStatusResponse response = controllerService.getConsumerStatus();
+            return ResponseEntity.ok().body(response);
+        }catch (Exception e){
+            return ResponseEntity.internalServerError().build();
+        }
+    }
 }

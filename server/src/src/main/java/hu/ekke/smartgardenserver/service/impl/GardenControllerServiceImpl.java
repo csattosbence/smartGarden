@@ -1,5 +1,6 @@
 package hu.ekke.smartgardenserver.service.impl;
 
+import hu.ekke.smartgardenserver.model.respons.ConsumerStatusResponse;
 import hu.ekke.smartgardenserver.service.GardenControllerService;
 import hu.ekke.smartgardenserver.service.PiApiCalls;
 import hu.ekke.smartgardenserver.service.runable.AutomationLogic;
@@ -59,6 +60,11 @@ public class GardenControllerServiceImpl implements GardenControllerService {
     @Override
     public void turnOffWateringSystem() {
         automationLogic.turnOffWateringSystem();
+    }
+
+    @Override
+    public ConsumerStatusResponse getConsumerStatus() {
+        return automationLogic.getConsumerStatus();
     }
 
     public GardenControllerServiceImpl(PiApiCalls piApiCalls){

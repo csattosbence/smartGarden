@@ -10,7 +10,9 @@ const AppNavbar = () =>{
         <div className="nav-bar">
             <Navbar  expand="lg">
             <Container>
-                <Row>
+
+                <h2 className="navbar-title">Smart Garden</h2>
+                {/* <Row>
                     <div className="navbar-items">
                     <div className="title">
                     <Link to="/">
@@ -26,7 +28,7 @@ const AppNavbar = () =>{
                     </Nav>
                 </Navbar.Collapse>
                 </div>
-                </Row>
+                </Row> */}
             </Container>
             </Navbar>
         </div>

@@ -22,6 +22,11 @@ def get_data():
     sensor_data.momentaryConsumption = str(round(sim.get_momentary_consumption(), 2))
     sensor_data.soilMoisture = str(round(sim.get_soil_moisture(), 2))
 
+    sensor_data.heaterStatus = str(sim.get_heater_satus())
+    sensor_data.lightStatus = str(sim.get_light_satus())
+    sensor_data.waterSysStatus = str(sim.get_water_sys_status())
+    sensor_data.humidifierStatus = str(sim.get_humidifier_status())
+
     return sensor_data
 
 

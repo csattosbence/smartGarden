@@ -1,21 +1,25 @@
-import '../../style/current-panels.css'
-import { Col } from 'react-bootstrap';
+import { Row, Col} from "react-bootstrap";
+import "../../style/dashboard-panel.css"
+import HumidityControlPanel from "../panel/humidityControlPanel";
+import HumidityChart from "../charts/humidityChart";
 
-const CurrentHumididtyPanel = ({data}) =>{
-    
-    var currentTemp = 0;
-    if(data.length !== 0){
-        var b = data.slice(-1);
-        var currentTemp = b[0].temperature
-    }
-    
-    return(
-        <Col xs={4}>
-            <div className='current-panels'>
-                <h3>{currentTemp}°C</h3>
-            </div>
-        </Col>
-    )
-} 
 
-export default CurrentHumididtyPanel;
+
+const HumidityPanel = ({data}) => {
+
+  return (
+   <div className="dashboard-panel">
+    <Row>
+      <Col xs={3}>
+        <HumidityControlPanel/>  
+      </Col>  
+      <Col xs={9}>
+        <HumidityChart data={data}/>
+      </Col>
+    </Row>
+   </div>
+  );
+}
+
+export default HumidityPanel;
+

@@ -15,6 +15,10 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 function App() {
   const [data, setData] = useState([]);
 
+
+  
+
+
   return (
     <div className="App">
       <DataSocketComponent data={data} setData={setData}/>

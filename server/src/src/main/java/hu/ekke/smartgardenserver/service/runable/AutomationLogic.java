@@ -3,6 +3,7 @@ package hu.ekke.smartgardenserver.service.runable;
 import hu.ekke.smartgardenserver.cache.Cache;
 import hu.ekke.smartgardenserver.model.SensorData;
 import hu.ekke.smartgardenserver.model.AutomationLogicState;
+import hu.ekke.smartgardenserver.model.respons.ConsumerStatusResponse;
 import hu.ekke.smartgardenserver.service.PiApiCalls;
 import lombok.extern.slf4j.Slf4j;
 
@@ -13,7 +14,7 @@ public class AutomationLogic implements Runnable{
     
     private final float INITIAL_TEMPERATURE = 20f;
     private final float INITIAL_HUMIDITY = 40f;
-    private final float INITIAL_LIGHT = 20f;
+    private final float INITIAL_LIGHT = 1500f;
     private final float INITIAL_SOIL_MOISTURE = 20f;
     private boolean isRunning = true;
 
@@ -23,11 +24,14 @@ public class AutomationLogic implements Runnable{
 
     PiApiCalls piApiCalls;
 
+    private boolean areStatusesSynched = false;
+
     @Override
     public void run() {
         setInitialState();
         try {
             while(isRunning){
+                syncConsumersStatus();
                 controlHumidifier();
                 controlLight();
                 controlWateringSystem();
@@ -43,10 +47,10 @@ public class AutomationLogic implements Runnable{
         if (state.isHeaterOn()){
             if(cache != null && !cache.isEmpty()){
                 SensorData lastData = cache.get(cache.size() -1);
-                if (lastData.getTemperature() < state.getDesiredTemperature()){
+                if (lastData.getTemperature() < state.getDesiredTemperature() && !lastData.getHeaterStatus()){
                     piApiCalls.heaterOn();
                 }
-                else if ((lastData.getTemperature() > state.getDesiredTemperature())){
+                else if (lastData.getTemperature() > state.getDesiredTemperature() && lastData.getHeaterStatus()){
                     piApiCalls.heaterOff();
                 }
             }
@@ -57,10 +61,10 @@ public class AutomationLogic implements Runnable{
         if (state.isHumidifierOn()){
             if(cache != null && !cache.isEmpty()){
                 SensorData lastData = cache.get(cache.size() -1);
-                if (lastData.getHumidity() < state.getDesiredHumidity()){
+                if (lastData.getHumidity() < state.getDesiredHumidity() && !Boolean.TRUE.equals(lastData.getHumidifierStatus())){
                     piApiCalls.humidifierOn();
                 }
-                else if ((lastData.getHumidity() > state.getDesiredHumidity())){
+                else if (lastData.getHumidity() > state.getDesiredHumidity() ){
                     piApiCalls.humidifierOff();
                 }
             }
@@ -71,7 +75,7 @@ public class AutomationLogic implements Runnable{
         if (state.isWaterSystemOn()){
             if(cache != null && !cache.isEmpty()){
                 SensorData lastData = cache.get(cache.size() -1);
-                if (lastData.getSoilMoisture() < state.getDesiredSoilMoisture()){
+                if (lastData.getSoilMoisture() < state.getDesiredSoilMoisture() && !Boolean.TRUE.equals(lastData.getWaterSysStatus())){
                     piApiCalls.wateringSystemOn();
                 }
                 else if ((lastData.getSoilMoisture() > state.getDesiredSoilMoisture())){
@@ -83,12 +87,13 @@ public class AutomationLogic implements Runnable{
 
     private void controlLight(){
         if (state.isLightOn()){
-
             if(cache != null && !cache.isEmpty()){
                 SensorData lastData = cache.get(cache.size() -1);
+                if(!lastData.getLightStatus()){
+                    piApiCalls.turnOnLight();
+                }
                 if (lastData.getLight() <= state.getDesiredLight() - 50){
                     float incrementValue = state.getDesiredLight() - lastData.getLight();
-                    piApiCalls.turnOnLight();
                     piApiCalls.setLight(incrementValue);
                 }
             }
@@ -115,7 +120,48 @@ public class AutomationLogic implements Runnable{
     }
 
 
+    // Szinkron szükséges a szerver ujrainditás miatt, mert lehet olyan eset hogy az egyik fogyasztó bekapcsolva marad ujraiditásnál és nem kapcsolki
+    private void syncConsumersStatus(){
+        if(!areStatusesSynched) {
+            if (cache != null && !cache.isEmpty()) {
+                SensorData lastData = cache.get(cache.size() - 1);
+                //SYNC HEATER
+                if (!lastData.getHeaterStatus().equals(state.isHeaterOn())) {
+                    state.setHeaterOn(lastData.getHeaterStatus());
+                }
+                //SYNC HUMIDIFIER
+                if (!lastData.getHumidifierStatus().equals(state.isHumidifierOn())){
+                    state.setHumidifierOn(lastData.getHumidifierStatus());
+                }
+                //SYNC WATER SYSTEM
+                if (!lastData.getWaterSysStatus().equals(state.isWaterSystemOn())){
+                    state.setWaterSystemOn(lastData.getWaterSysStatus());
+                }
+                //LIGHT SYSTEM
+                if(!lastData.getLightStatus().equals(state.isLightOn())){
+                    state.setLightOn(lastData.getLightStatus());
+                }
+                areStatusesSynched = true;
+            }
+        }
+    }
+
     //-----------------------STATE SETTERS-----------------------
+    public ConsumerStatusResponse getConsumerStatus(){
+        ConsumerStatusResponse response = new ConsumerStatusResponse();
+
+        response.setHeaterStatus(state.isHeaterOn());
+        response.setHumidifierStatus(state.isHumidifierOn());
+        response.setLightStatus(state.isLightOn());
+        response.setWaterSysStatus(state.isWaterSystemOn());
+
+        response.setDesiredLight(state.getDesiredLight());
+        response.setDesiredHumidity(state.getDesiredHumidity());
+        response.setDesiredSoilMoisture(state.getDesiredSoilMoisture());
+        response.setDesiredTemperature(state.getDesiredTemperature());
+
+        return response;
+    }
     public synchronized void turnOnHeater(){
         this.state.setHeaterOn(true);
     }

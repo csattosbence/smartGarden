@@ -1,6 +1,6 @@
 import {
-    Line,
-    LineChart,
+    Area,
+    AreaChart,
     XAxis,
     YAxis,
     CartesianGrid,
@@ -14,14 +14,13 @@ import {
 const HumidityChart = ({data}) =>{
     return(
         <ResponsiveContainer width="80%" height={200}>
-        <LineChart  data={data}>
+        <AreaChart  data={data}>
             <XAxis dataKey="currentDate"/>
             <YAxis dataKey="humidity"/>
             <Tooltip/>
             <Legend verticalAlign="top" height={36}/>
-            <Line name="Humidity %" type="monotone" dataKey="humidity" stroke="#09b0e3" />
-            <CartesianGrid strokeDasharray="3 3" />
-        </LineChart>
+            <Area name="Humidity %" type="monotone" dataKey="humidity" stroke="#09b0e3" fill='#00d9d9'/>
+        </AreaChart>
         </ResponsiveContainer>
     )
 }

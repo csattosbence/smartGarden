@@ -1,7 +1,11 @@
 .nav-bar{
-    background: rgb(2,0,36);
-    background: linear-gradient(90deg,rgba(234,251,255,1) 100%, rgba(0,212,255,1) 100%);
+    background: rgb(79,77,77);
+    background: linear-gradient(90deg, rgba(79,77,77,0.8631827731092436) 0%, rgba(57,57,57,0.8169642857142857) 70%);
     text-decoration: none;
+}
+
+.navbar-title{
+    color: white;
 }
 
 .nav-items{

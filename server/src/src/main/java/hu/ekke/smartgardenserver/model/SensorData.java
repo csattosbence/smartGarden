@@ -18,5 +18,9 @@ public class SensorData {
     private String currentDate;
     private Float light;
     private Float soilMoisture;
+    private Boolean heaterStatus;
+    private Boolean lightStatus;
+    private Boolean humidifierStatus;
+    private Boolean waterSysStatus;
 
 }

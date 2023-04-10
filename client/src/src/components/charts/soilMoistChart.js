@@ -21,8 +21,7 @@ const SoilMoistChart = ({data}) =>{
             <YAxis dataKey="soilMoisture"/>
             <Tooltip/>
             <Legend verticalAlign="top" height={36}/>
-            <Area name="Soilmoisture %" type="monotone" dataKey="soilMoisture" stroke="#404040" fill='#404040'/>
-            <CartesianGrid strokeDasharray="3 3" />
+            <Area name="Soilmoisture %" type="monotone" dataKey="soilMoisture" stroke="#018240" fill='#04db6c'/>
         </AreaChart>
         </ResponsiveContainer>
     )
